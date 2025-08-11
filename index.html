@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Video + Suoni con chat scherzo</title>
+  <title>Waveful 2</title>
   <style>
     body {
       background-color: black;
@@ -17,8 +17,9 @@
       min-height: 100vh;
     }
     video {
-      max-width: 80vw;
-      max-height: 400px;
+      width: 90vw;
+      max-width: 600px;
+      height: auto;
       border-radius: 10px;
       background-color: black;
       box-shadow: 0 4px 12px rgba(255,255,255,0.3);
@@ -27,14 +28,16 @@
     }
     .images-container {
       display: flex;
-      gap: 40px;
+      gap: 30px;
       justify-content: center;
       width: 100%;
       margin-bottom: 40px;
+      flex-wrap: wrap;
     }
     .clickable-image {
-      max-width: 300px;
-      max-height: 300px;
+      width: 45vw;
+      max-width: 280px;
+      max-height: 280px;
       cursor: pointer;
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(255,255,255,0.3);
@@ -57,6 +60,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      box-sizing: border-box;
     }
     #chatMessages {
       height: 150px;
@@ -67,9 +71,10 @@
       font-size: 16px;
       line-height: 1.4;
       color: #eee;
+      word-wrap: break-word;
     }
     #chatInput {
-      padding: 10px;
+      padding: 12px;
       font-size: 16px;
       border-radius: 6px;
       border: none;
@@ -83,17 +88,44 @@
       border: none;
       color: white;
       font-weight: bold;
-      padding: 10px 20px;
+      padding: 12px 20px;
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.3s ease;
       margin-left: 10px;
+      flex-shrink: 0;
     }
     #sendBtn:hover {
       background-color: #0056b3;
     }
     .input-row {
       display: flex;
+      flex-wrap: nowrap;
+    }
+
+    /* MOBILE SPECIFIC */
+    @media (max-width: 600px) {
+      .images-container {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+      }
+      .clickable-image {
+        width: 80vw;
+        max-width: none;
+        max-height: none;
+      }
+      .input-row {
+        flex-direction: column;
+      }
+      #sendBtn {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+      }
+      #chatInput {
+        width: 100%;
+      }
     }
   </style>
 </head>
