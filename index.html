@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Video + Suoni con chat scherzo</title>
+  <style>
+    body {
+      background-color: black;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: white;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    video {
+      max-width: 80vw;
+      max-height: 400px;
+      border-radius: 10px;
+      background-color: black;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+      outline: none;
+      margin-bottom: 30px;
+    }
+    .images-container {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+    .clickable-image {
+      max-width: 300px;
+      max-height: 300px;
+      cursor: pointer;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+      object-fit: contain;
+      transition: transform 0.3s ease;
+      user-select: none;
+    }
+    .clickable-image:hover {
+      transform: scale(1.05);
+    }
+
+    /* Chat styles */
+    .chat-container {
+      width: 90%;
+      max-width: 600px;
+      background-color: #111;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #444;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #chatMessages {
+      height: 150px;
+      background-color: #222;
+      border-radius: 6px;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 16px;
+      line-height: 1.4;
+      color: #eee;
+    }
+    #chatInput {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      flex-grow: 1;
+      background-color: #333;
+      color: white;
+    }
+    #sendBtn {
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-left: 10px;
+    }
+    #sendBtn:hover {
+      background-color: #0056b3;
+    }
+    .input-row {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+
+  <video id="video1" autoplay muted playsinline>
+    <source src="video1.mp4" type="video/mp4" />
+    Il tuo browser non supporta il video.
+  </video>
+
+  <video id="video2" autoplay muted playsinline style="display:none;">
+    <source src="video2.mp4" type="video/mp4" />
+    Il tuo browser non supporta il video.
+  </video>
+
+  <div class="images-container">
+    <img id="img1" class="clickable-image" src="immagine1.png" alt="Video 1" />
+    <img id="img2" class="clickable-image" src="immagine2.png" alt="Video 2" />
+  </div>
+
+  <div class="chat-container">
+    <div id="chatMessages"></div>
+    <div class="input-row">
+      <input type="text" id="chatInput" placeholder="Scrivi qualcosa..." autocomplete="off" />
+      <button id="sendBtn">Invia</button>
+    </div>
+  </div>
+
+  <audio id="sound1" src="suono1.mp3"></audio>
+  <audio id="sound2" src="suono2.mp3"></audio>
+
+  <script>
+    // Video e suoni come prima
+    const img1 = document.getElementById('img1');
+    const img2 = document.getElementById('img2');
+    const video1 = document.getElementById('video1');
+    const video2 = document.getElementById('video2');
+    const sound1 = document.getElementById('sound1');
+    const sound2 = document.getElementById('sound2');
+
+    video1.style.display = 'block';
+    video2.style.display = 'none';
+
+    img1.addEventListener('click', () => {
+      video2.pause();
+      video2.style.display = 'none';
+      sound2.pause();
+      sound2.currentTime = 0;
+
+      video1.style.display = 'block';
+      video1.currentTime = 0;
+      video1.muted = false;
+      video1.play();
+
+      sound1.currentTime = 0;
+      sound1.play();
+    });
+
+    img2.addEventListener('click', () => {
+      video1.pause();
+      video1.style.display = 'none';
+      sound1.pause();
+      sound1.currentTime = 0;
+
+      video2.style.display = 'block';
+      video2.currentTime = 0;
+      video2.muted = false;
+      video2.play();
+
+      sound2.currentTime = 0;
+      sound2.play();
+    });
+
+    // Chat scherzo
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatMessages = document.getElementById('chatMessages');
+
+    sendBtn.addEventListener('click', () => {
+      if(chatInput.value.trim() === '') return; // Non inviare messaggi vuoti
+      // Aggiungi solo "SCHIAVO DEI LIKES" alla chat
+      const messageElem = document.createElement('div');
+      messageElem.textContent = "SCHIAVO DEI LIKES";
+      chatMessages.appendChild(messageElem);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      chatInput.value = '';
+    });
+
+    // Invia anche premendo Invio
+    chatInput.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter') {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+  </script>
+
+</body>
+</html>
